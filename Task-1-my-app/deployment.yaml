@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-application
+  labels:
+    app: nodejs-backend-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nodejs-backend-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-backend-app
+    spec:
+      containers:
+      - name: nodejs-application
+        image: ragavendra1411/nodejs-backend-application:1.0.0
+        env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: DB_HOST
+                optional: false 
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: DB_USER
+                optional: false 
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: DB_PASSWORD
+                optional: false 
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: DB_DATABASE
+                optional: false 
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: DB_PORT
+                optional: false 
+          - name: PORT
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass-id
+                key: PORT
+                optional: false 
+   
